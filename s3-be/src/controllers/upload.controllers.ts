@@ -13,7 +13,7 @@ const getPresignedUrl = ({ bucket, key }: { bucket: string, key: string }) => {
 
 export const handlePresignedUrlRequest = async (req: Request, res: Response) => {
   try {
-    const { mime, fileExtension } = req.body;
+    const { mime } = req.body;
 
     const name = uuid();
     const fileName = `${name}-${mime}`;
