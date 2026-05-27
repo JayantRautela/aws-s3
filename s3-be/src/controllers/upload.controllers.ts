@@ -39,12 +39,13 @@ export const handlePresignedUrlRequest = async (req: Request, res: Response) => 
 
 export const upload = async (req: Request, res: Response) => {
   try {
-    const { name, description, fileName } = req.body;
+    const { name, description, fileName, originalName } = req.body;
 
     const image = await Image.create({
       name: name,
       description: description,
-      fileName: fileName
+      fileName: fileName,
+      originalName: originalName
     });
 
     res.status(200).json({

@@ -13,6 +13,10 @@ const imageSchema = new mongoose.Schema({
     type: String,
     required: true,
     // unique: true
+  },
+  originalName: {
+    type: String,
+    required: true
   }
 }, { timestamps: true });
 
