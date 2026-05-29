@@ -1,5 +1,7 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 interface ImageItem {
   _id: string;
@@ -9,21 +11,37 @@ interface ImageItem {
   originalName: string;
 }
 
-export default async function ImageList() {
+export default function ImageList() {
+  const [images, setImages] = useState<ImageItem[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  const res = await fetch('http://localhost:3002/api/v1/image/get-images', {
-    method: 'GET',
-  });
+  useEffect(() => {
+  const fetchImages = async () => {
+    try {
+      const res = await fetch(
+        'http://localhost:3002/api/v1/image/get-images'
+      );
 
-  if (!res.ok) {
-    console.log("Error getting images");
-    alert("Error getting images");
-    return;
+      if (!res.ok) throw new Error('Failed to fetch images');
+
+      const data = await res.json();
+      setImages(data.data.images);
+    } catch (error) {
+      console.error(error);
+      alert('Error getting images');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchImages();
+}, []);
+
+  if (loading) {
+    return (
+      <div className="font-bold text-3xl text-black">Loading...</div>
+    )
   }
-
-  const data = await res.json();
-  const images = data.data.images;
-  console.log(typeof images);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 text-black relative">
@@ -38,14 +56,13 @@ export default async function ImageList() {
           return (
             <div
               key={item._id}
-              className="bg-white rounded-2xl shadow-md overflow-hidden"
+              className="bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer hover:shadow-xl"
             >
               <Image
                 src={`https://d1qs3ublw9b3x4.cloudfront.net/${item.fileName}`}
                 alt={item.name}
                 width={100}
                 height={100}
-                fetchPriority='high'
                 className="w-full h-60 object-cover"
               />
 
