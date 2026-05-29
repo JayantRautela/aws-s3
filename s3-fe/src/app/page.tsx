@@ -17,7 +17,7 @@ export default async function ImageList() {
 
   if (!res.ok) {
     console.log("Error getting images");
-    window.alert("Error getting images");
+    alert("Error getting images");
     return;
   }
 
@@ -45,6 +45,7 @@ export default async function ImageList() {
                 alt={item.name}
                 width={100}
                 height={100}
+                fetchPriority='high'
                 className="w-full h-60 object-cover"
               />
 

@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function ImageForm() {
@@ -8,6 +9,7 @@ export default function ImageForm() {
   const [description, setDescription] = useState("");
   const [fileName, setFileName] = useState("");
   const [presignedUrl, setPresignedUrl] = useState("");
+  const router = useRouter();
 
   const uploadToS3 = async (presignedUrl: string, file: File) => {
     const res = await fetch(presignedUrl, {
@@ -85,6 +87,7 @@ export default function ImageForm() {
     setImage(null);
     setDescription("");
     setName("");
+    router.push('/');
   }
 
   return (
