@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-interface ImageItem {
+export interface ImageItem {
   _id: string;
   name: string;
   description: string;
@@ -59,7 +59,7 @@ export default function ImageList() {
             <div
               key={item._id}
               className="bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer hover:shadow-xl"
-              onClick={() => router.push(`/image/${item._id}?link=https://d1qs3ublw9b3x4.cloudfront.net/${item.fileName}`)}
+              onClick={() => router.push(`/image/${item._id}`)}
             >
               <Image
                 src={`https://d1qs3ublw9b3x4.cloudfront.net/${item.fileName}`}
