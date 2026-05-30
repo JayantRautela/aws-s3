@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface ImageItem {
@@ -14,6 +15,7 @@ interface ImageItem {
 export default function ImageList() {
   const [images, setImages] = useState<ImageItem[]>([]);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
   const fetchImages = async () => {
@@ -57,6 +59,7 @@ export default function ImageList() {
             <div
               key={item._id}
               className="bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer hover:shadow-xl"
+              onClick={() => router.push(`/image/${item._id}?link=https://d1qs3ublw9b3x4.cloudfront.net/${item.fileName}`)}
             >
               <Image
                 src={`https://d1qs3ublw9b3x4.cloudfront.net/${item.fileName}`}
